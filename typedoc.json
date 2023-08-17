@@ -1,0 +1,10 @@
+{
+	// Comments are supported, like tsconfig.json
+	"entryPoints": ["src/vision.ts"],
+	"out": "public",
+	"tsconfig": "tsconfig.docs.json",
+	// "excludePrivate": true,
+	"plugin": ["@mxssfd/typedoc-theme"],
+	"theme": "my-theme",
+	"name": "Home"
+}

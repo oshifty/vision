@@ -1,0 +1,10 @@
+{
+	// format on save
+	"editor.formatOnSave": true,
+	// set prettier as the default formatter
+	"editor.defaultFormatter": "esbenp.prettier-vscode",
+	// set default indentation to tab
+	"editor.insertSpaces": false,
+	// set tab size to 4
+	"editor.tabSize": 4
+}
