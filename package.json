@@ -8,6 +8,7 @@
 	"license": "MIT",
 	"private": false,
 	"scripts": {
+		"postinstall": "ts-node tools/fetchUDR.ts",
 		"app": "ts-node src/test/main.ts",
 		"app:watch": "nodemon src/test/main.ts",
 		"doc": "typedoc",
@@ -29,5 +30,8 @@
 		"ts-node": "^10.9.1",
 		"typedoc": "^0.24.8",
 		"typescript": "^5.1.6"
+	},
+	"dependencies": {
+		"json-schema-to-typescript": "^13.0.2"
 	}
 }
