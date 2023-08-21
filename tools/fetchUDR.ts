@@ -15,6 +15,8 @@ async function main(): Promise<void> {
 		},
 	);
 
+	await fs.writeFile("./src/libraries/udr.json", udrJsonSchema);
+
 	let typeDefinitions = await compile(schema, "udr");
 
 	let currentTimestamp = new Date().toUTCString();
@@ -26,10 +28,8 @@ async function main(): Promise<void> {
 	 * @see https://oshifty.gitlab.io/e173/udr-document.json
 	 * @updated ${currentTimestamp}
 	 */
-	export namespace UDR {
-		${typeDefinitions}
-	}
-	`;
+
+	${typeDefinitions}`;
 
 	let options = await fs
 		.readFile(".prettierrc", "utf8")
