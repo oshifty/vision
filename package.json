@@ -9,8 +9,6 @@
 	"private": false,
 	"scripts": {
 		"postinstall": "tsx tools/fetchUDR.ts",
-		"app": "tsx src/test/main.ts",
-		"app:watch": "tsx watch src/test/main.ts",
 		"doc:build": "typedoc",
 		"doc": "typedoc --watch --preserveWatchOutput & browser-sync start -c browsersync.json",
 		"dev": "vite dev",
