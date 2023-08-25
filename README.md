@@ -4,7 +4,7 @@ A new and intuitive way of controlling intelligent devices developed from first 
 
 ## prerequisites
 
--   [**Node.js®**](https://nodejs.org/) LTS
+- [**Node.js®**](https://nodejs.org/) LTS
 
 ## download
 
@@ -25,19 +25,19 @@ code <path>
 and install all dependencies with `npm` in the terminal:
 
 ```bash
-yarn install
+npm install
 ```
 
 ## run app for development
 
 ```bash
-yarn app:watch
+npm run dev
 ```
 
 ## run tests for development
 
 ```bash
-yarn test:watch
+npm run test
 ```
 
 ## build documentation
@@ -47,7 +47,7 @@ yarn test:watch
 To build the documentation website for development and watch for file changes to automatically recompile run:
 
 ```bash
-yarn doc:watch
+npm run doc
 ```
 
 ### for production
@@ -55,11 +55,17 @@ yarn doc:watch
 To build your plugin for production run:
 
 ```bash
-yarn doc
+npm run doc:build
 ```
 
 ## lint
 
 ```bash
-yarn lint
+npm run lint
+```
+
+## format
+
+```bash
+npm run format
 ```

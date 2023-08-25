@@ -1,0 +1,8 @@
+{
+	"watch": true,
+	"server": "public",
+	"port": 8000,
+	"ui": {
+		"port": 8001
+	}
+}

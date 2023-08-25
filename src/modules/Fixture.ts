@@ -1,10 +1,10 @@
-import * as UDR from "../libraries/udr.next";
+import type * as UDR from '../lib/udr.next';
 
 export class Fixture {
-	myID: Number;
+	myID: number;
 	definition: UDR.Device;
 
-	constructor(myID: Number, definition: UDR.Device) {
+	constructor(myID: number, definition: UDR.Device) {
 		this.myID = myID;
 		this.definition = definition;
 	}

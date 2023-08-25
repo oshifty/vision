@@ -1,25 +1,25 @@
-import { promises as fs } from "fs";
-import { JSONSchema, compile } from "json-schema-to-typescript";
-import { Try } from "../src/libraries/helpers";
-import { format } from "prettier";
+import { promises as fs } from 'fs';
+import { JSONSchema, compile } from 'json-schema-to-typescript';
+import { Try } from '../src/lib/helpers';
+import { format } from 'prettier';
 
 async function main(): Promise<void> {
-	let udrJsonSchema = await fetch(
-		"https://oshifty.gitlab.io/e173/udr-document.json",
-	).then((res) => res.text());
+	const udrJsonSchema = await fetch('https://oshifty.gitlab.io/e173/udr-document.json').then(
+		(res) => res.text()
+	);
 
 	const schema = Try<JSONSchema>(
 		() => JSON.parse(udrJsonSchema),
 		() => {
 			throw new TypeError(`Error parsing JSON`);
-		},
+		}
 	);
 
-	await fs.writeFile("./src/libraries/udr.json", udrJsonSchema);
+	await fs.writeFile('./src/lib/udr.json', udrJsonSchema);
 
-	let typeDefinitions = await compile(schema, "udr");
+	const typeDefinitions = await compile(schema, 'udr');
 
-	let currentTimestamp = new Date().toUTCString();
+	const currentTimestamp = new Date().toUTCString();
 
 	let dtsFile = `/**
 	 * E1.73 (Uniform Device Representation)
@@ -31,13 +31,11 @@ async function main(): Promise<void> {
 
 	${typeDefinitions}`;
 
-	let options = await fs
-		.readFile(".prettierrc", "utf8")
-		.then((res) => JSON.parse(res));
-	options.parser = "typescript";
+	const options = await fs.readFile('.prettierrc', 'utf8').then((res) => JSON.parse(res));
+	options.parser = 'typescript';
 	dtsFile = await format(dtsFile, options);
 
-	await fs.writeFile("src/libraries/udr.d.ts", dtsFile);
+	await fs.writeFile('src/lib/udr.d.ts', dtsFile);
 }
 
 main();
