@@ -1,4 +1,4 @@
-export function Try<T>(fn: () => T, err: (e: Error) => any): T {
+export function Try<T>(fn: () => T, err: (e: Error) => T): T {
 	try {
 		return fn();
 	} catch (e) {

@@ -49,7 +49,7 @@ async function main() {
 	const validateUDRnext = ajv.compile(UDRnextSchema);
 
 	const data = await fs.readFile('./src/test/src/myFixture.json', 'utf8').then((res) =>
-		Try<any>(
+		Try<unknown>(
 			() => JSON.parse(res),
 			(err) => {
 				console.log(`\nData: ${res}`);
