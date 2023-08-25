@@ -1,4 +1,4 @@
-import type http from "http";
+import type http from 'http';
 import { Server } from 'socket.io';
 
 export function createWebsocketServer(httpServer: http.Server) {
