@@ -6,9 +6,9 @@
 
 <h1>Validating {data.filepath}</h1>
 
-{#await data.unknownJSONDoc}
+{#await json}
 	<code>Fetching file from disk...</code>
-{:then unknownJSONDoc}
+{:then json}
 	<JsonView {json} />
 {/await}
 
