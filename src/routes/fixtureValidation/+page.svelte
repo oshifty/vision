@@ -1,40 +1,55 @@
 <script lang="ts">
-	import { onMount } from 'svelte';
-
-	import type * as UDRnext from '$lib/udr.next';
-	import type * as UDR from '$lib/udr';
-
+	import { JsonView } from '@zerodevx/svelte-json-view';
 	export let data;
-
-	async function main() {
-		const contents = JSON.stringify(data.file, null, '\t');
-
-		console.log(`\nFilename: ${data.filename}`);
-		console.log(`\nData: ${contents}`);
-
-		console.log(`\nValidating against UDR Schema...`);
-		if (data.validUDR) {
-			const file = data.file as UDR.Device;
-			console.log(`Successfully read "${file.userIdentifier}".`);
-		} else {
-			for (const error of data.validateUDRErrors || []) {
-				console.log(`Error parsing "myFixture.json": ${error.message}\n`);
-			}
-		}
-
-		console.log(`\nValidating against UDRnext Schema...`);
-		if (data.validUDRnext) {
-			const file = data.file as UDRnext.Device;
-			console.log(`Successfully read "${file.userIdentifier}" with "${file.test}".`);
-		} else {
-			for (const error of data.validateUDRnextErrors || []) {
-				console.log(`Error parsing "myFixture.json": ${error.message}\n`);
-			}
-		}
-	}
-	onMount(() => {
-		main();
-	});
+	let json = data.unknownJSONDoc;
 </script>
 
-<h1>Hello!</h1>
+<h1>Validating {data.filepath}</h1>
+
+{#await data.unknownJSONDoc}
+	<code>Fetching file from disk...</code>
+{:then unknownJSONDoc}
+	<JsonView {json} />
+{/await}
+
+<div style="margin-top: 20px">
+	<span>UDR Validation: </span>
+	{#await data.validatedUDRDoc}
+		<span>in progess...</span>
+	{:then validatedUDRDoc}
+		{#if validatedUDRDoc.valid}
+			<span style="color: green">
+				Successfully read "{validatedUDRDoc.contents.userIdentifier}".
+			</span>
+		{:else}
+			<span style="color: red">Error parsing {data.filepath}.</span>
+			{#each validatedUDRDoc.errors || [] as error}
+				<p style="color: red">{error.message}</p>
+			{/each}
+		{/if}
+	{/await}
+
+	<br />
+	<span>UDRnext Validation: </span>
+	{#await data.validatedUDRNextDoc}
+		<span>in progess...</span>
+	{:then validatedUDRNextDoc}
+		{#if validatedUDRNextDoc.valid}
+			<span
+				>Successfully read "{validatedUDRNextDoc.contents.userIdentifier}" with "{validatedUDRNextDoc
+					.contents.test}".</span
+			>
+		{:else}
+			<span style="color: red">Error parsing {data.filepath}.</span>
+			{#each validatedUDRNextDoc.errors || [] as error}
+				<span style="color: red">&rarr; {error.message}</span>
+			{/each}
+		{/if}
+	{/await}
+</div>
+
+<style>
+	:global(body) {
+		font-family: Ubuntu, 'Helvetica Neue', sans-serif;
+	}
+</style>

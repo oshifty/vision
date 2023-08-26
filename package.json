@@ -52,6 +52,7 @@
 	},
 	"type": "module",
 	"dependencies": {
+		"@zerodevx/svelte-json-view": "^1.0.7",
 		"ajv": "^8.12.0",
 		"esbuild": "0.19.2",
 		"json-schema-to-typescript": "^13.0.2",
