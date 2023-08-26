@@ -34,7 +34,7 @@
 		<span>in progess...</span>
 	{:then validatedUDRNextDoc}
 		{#if validatedUDRNextDoc.valid}
-			<span
+			<span style="color: green"
 				>Successfully read "{validatedUDRNextDoc.contents.userIdentifier}" with "{validatedUDRNextDoc
 					.contents.test}".</span
 			>
