@@ -1,20 +1,19 @@
 <script lang="ts">
 	import { JsonView } from '@zerodevx/svelte-json-view';
 	export let data;
-	let json = data.unknownJSONDoc;
 </script>
 
 <h1>Validating {data.filepath}</h1>
 
-{#await json}
+{#await data.streamed.unknownJSONDoc}
 	<code>Fetching file from disk...</code>
-{:then json}
-	<JsonView {json} />
+{:then unknownJSONDoc}
+	<JsonView json={unknownJSONDoc} />
 {/await}
 
 <div style="margin-top: 20px">
 	<span>UDR Validation: </span>
-	{#await data.validatedUDRDoc}
+	{#await data.streamed.validatedUDRDoc}
 		<span>in progess...</span>
 	{:then validatedUDRDoc}
 		{#if validatedUDRDoc.valid}
@@ -31,7 +30,7 @@
 
 	<br />
 	<span>UDRnext Validation: </span>
-	{#await data.validatedUDRNextDoc}
+	{#await data.streamed.validatedUDRNextDoc}
 		<span>in progess...</span>
 	{:then validatedUDRNextDoc}
 		{#if validatedUDRNextDoc.valid}

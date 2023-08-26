@@ -7,21 +7,21 @@ import { UDRVersion } from '$lib/enums';
 
 export const load = (async () => {
 	const filepath = './src/test/myFixture.json';
-	const unknownJSONDoc = await getFileAsJSON(filepath);
+	const unknownJSONDoc = getFileAsJSON(filepath);
 
-	const validatedUDRDoc = validateAgainstUDRSymbol<UDR.Device>(unknownJSONDoc, 'Device');
+	const validatedUDRDoc = validateAgainstUDRSymbol<UDR.Device>(await unknownJSONDoc, 'Device');
 	const validatedUDRNextDoc = validateAgainstUDRSymbol<UDRnext.Device>(
-		unknownJSONDoc,
+		await unknownJSONDoc,
 		'Device',
 		UDRVersion.UDRnext
 	);
 
-	await Promise.all([validatedUDRDoc, validatedUDRNextDoc]);
-
 	return {
 		filepath: filepath,
-		unknownJSONDoc: unknownJSONDoc,
-		validatedUDRDoc: validatedUDRDoc,
-		validatedUDRNextDoc: validatedUDRNextDoc
+		streamed: {
+			unknownJSONDoc: unknownJSONDoc,
+			validatedUDRDoc: validatedUDRDoc,
+			validatedUDRNextDoc: validatedUDRNextDoc
+		}
 	};
 }) satisfies PageServerLoad;
