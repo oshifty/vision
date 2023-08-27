@@ -9,6 +9,8 @@
 	import JSZip from 'jszip';
 	import type { IPosition } from '../../interfaces/IPosition.js';
 	import { map } from '$lib/helpers.js';
+	import { XMLParser } from 'fast-xml-parser';
+	import type { document as GDTFDocument, Model } from 'gdtf-types';
 	const zip = new JSZip();
 
 	export let data;
@@ -114,30 +116,58 @@
 		let gltf = await zip.loadAsync(data.streamed.base64, { base64: true });
 
 		const world = new World();
+		const descriptionXML = await gltf.file('description.xml')!.async('string');
+		const description = new XMLParser({
+			ignoreAttributes: false,
+			attributeNamePrefix: '',
+			isArray: (tagName: string) => ['Geometry', 'Axis'].includes(tagName)
+		}).parse(descriptionXML) as GDTFDocument;
 
 		let base = await gltf.file('models/gltf/base.glb')?.async('arraybuffer');
 		let yoke = await gltf.file('models/gltf/yoke.glb')?.async('arraybuffer');
 		let head = await gltf.file('models/gltf/head.glb')?.async('arraybuffer');
 
+		const Geometry = description.GDTF.FixtureType.Geometries.Geometry![0];
+		console.log(Geometry);
+
+		type Matrix = [number, number, number, number][];
+		// {float,float,float,float}{float,float,float,float}{float,float,float,float}{float,float,float,float}
+		const parseMatrix = (matrix: string): Matrix => {
+			const matrixArray = matrix.split('}{');
+			const matrixArray2 = matrixArray.map((m) => m.replace('{', '').replace('}', ''));
+			const matrixArray3 = matrixArray2.map((m) => m.split(',').map((n) => parseFloat(n)));
+			const matrixArray4 = matrixArray3.map(
+				(m) => [m[0], m[1], m[2], m[3]] as [number, number, number, number]
+			);
+			return matrixArray4;
+		};
+
+		const simplifyMatrix = (matrix: Matrix) => {
+			return [matrix[0][3], matrix[1][3], matrix[2][3]] as const;
+		};
+
 		if (base)
 			world.loader.parse(base, '', (gltf) => {
 				world.base = gltf;
-				world.base.scene.position.set(0, 0.3, 0);
+				world.base.scene.position.set(...simplifyMatrix(parseMatrix(Geometry.Position!)));
+
 				world.scene.add(world.base.scene);
 			});
 
 		if (yoke)
 			world.loader.parse(yoke, '', (gltf) => {
 				world.yoke = gltf;
-				world.yoke.scene.position.set(0, -0.087162, 0);
-				world.base?.scene.add(world.yoke.scene);
+				world.yoke.scene.position.set(...simplifyMatrix(parseMatrix(Geometry.Axis![0].Position!)));
+				world.scene.add(world.yoke.scene);
 			});
 
 		if (head)
 			world.loader.parse(head, '', (gltf) => {
 				world.head = gltf;
-				world.head.scene.position.set(0, -0.284, 0);
-				world.yoke?.scene.add(world.head.scene);
+				world.head.scene.position.set(
+					...simplifyMatrix(parseMatrix(Geometry.Axis![0].Axis![0].Position!))
+				);
+				world.scene.add(world.head.scene);
 			});
 
 		await world.init();
