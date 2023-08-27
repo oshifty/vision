@@ -2,7 +2,7 @@ import type { PageServerLoad } from './$types';
 import type * as UDR from '$lib/udr';
 import type * as UDRnext from '$lib/udr.next';
 import { validateAgainstUDRSymbol } from '$lib/validator';
-import { getFileAsJSON } from '$lib/helpers';
+import { getFileAsJSON } from '$lib/helpers.server';
 import { UDRVersion } from '$lib/enums';
 
 export const load = (async () => {
