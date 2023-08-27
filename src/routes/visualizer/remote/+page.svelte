@@ -47,15 +47,25 @@
 	});
 </script>
 
-<p>Status: <span id="status">{status}</span></p>
-<p>Transport: <span id="transport">{transport}</span></p>
-
-<PositionController {socket} />
+<div class="main-container">
+	<p>Status: <span id="status">{status}</span></p>
+	<p>Transport: <span id="transport">{transport}</span></p>
+	<PositionController {socket} />
+</div>
 
 <style>
-	:global(body),
-	:global(html) {
-		height: 100vh;
-		height: calc(var(--vh, 1vh) * 100);
+	:global(html),
+	:global(body) {
+		width: 100%;
+		height: 100%;
+		overflow: hidden;
+		padding: 0;
+		margin: 0;
+	}
+
+	div.main-container {
+		height: 100%;
+		overflow: scroll;
+		-webkit-overflow-scrolling: touch;
 	}
 </style>
