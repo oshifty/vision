@@ -26,9 +26,11 @@
 
 	function drag(event: MouseEvent | TouchEvent) {
 		if (!currentlyDragging) return;
-		const newY = (event as any).clientY ?? (event as any).touches[0].clientY;
-		const newX = (event as any).clientX ?? (event as any).touches[0].clientX;
-		const cursorPt = new DOMPoint(newX, newY).matrixTransform(canvas.getScreenCTM()!.inverse());
+		const newY = (event as MouseEvent).clientY ?? (event as TouchEvent).touches[0].clientY;
+		const newX = (event as MouseEvent).clientX ?? (event as TouchEvent).touches[0].clientX;
+		const screenCtm = canvas.getScreenCTM();
+		if (!screenCtm) return;
+		const cursorPt = new DOMPoint(newX, newY).matrixTransform(screenCtm.inverse());
 		x = Math.min(1, Math.max(0, cursorPt.x / 100));
 		y = Math.min(Math.max(0, cursorPt.y / 100), 1);
 		socket.emit('position', { x, y });
