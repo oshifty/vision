@@ -62,7 +62,7 @@
 		"esbuild": "0.19.2",
 		"fast-xml-parser": "^4.2.7",
 		"fetch-cookie": "^2.1.0",
-		"gdtf-types": "1.0.0",
+		"gdtf-types": "^1.0.0",
 		"json-schema-to-typescript": "^13.0.2",
 		"jszip": "^3.10.1",
 		"three": "^0.155.0",
