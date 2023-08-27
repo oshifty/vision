@@ -143,14 +143,14 @@
 		};
 
 		const simplifyMatrix = (matrix: Matrix) => {
-			return [matrix[0][3], matrix[1][3], matrix[2][3]] as const;
+			return [matrix[0][3], matrix[2][3], matrix[1][3]] as const;
 		};
 
 		if (base)
 			world.loader.parse(base, '', (gltf) => {
 				world.base = gltf;
 				world.base.scene.position.set(...simplifyMatrix(parseMatrix(Geometry.Position!)));
-
+				world.base.scene.position.y += 0.3;
 				world.scene.add(world.base.scene);
 			});
 
@@ -158,7 +158,7 @@
 			world.loader.parse(yoke, '', (gltf) => {
 				world.yoke = gltf;
 				world.yoke.scene.position.set(...simplifyMatrix(parseMatrix(Geometry.Axis![0].Position!)));
-				world.scene.add(world.yoke.scene);
+				world.base?.scene.add(world.yoke.scene);
 			});
 
 		if (head)
@@ -167,7 +167,7 @@
 				world.head.scene.position.set(
 					...simplifyMatrix(parseMatrix(Geometry.Axis![0].Axis![0].Position!))
 				);
-				world.scene.add(world.head.scene);
+				world.yoke?.scene.add(world.head.scene);
 			});
 
 		await world.init();
