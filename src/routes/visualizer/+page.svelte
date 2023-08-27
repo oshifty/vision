@@ -1,6 +1,4 @@
 <script lang="ts">
-	import './global.css';
-
 	import * as THREE from 'three';
 	import { GLTFLoader, type GLTF } from 'three/examples/jsm/loaders/GLTFLoader';
 	import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
