@@ -15,6 +15,8 @@
 
 	export let data;
 
+	let threeContainer: HTMLDivElement;
+
 	class World {
 		renderer: THREE.WebGLRenderer;
 		camera: THREE.PerspectiveCamera;
@@ -51,7 +53,7 @@
 
 			this.renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
 			this.renderer.setSize(window.innerWidth, window.innerHeight);
-			document.body.appendChild(this.renderer.domElement);
+			threeContainer.appendChild(this.renderer.domElement);
 
 			this.controls = new OrbitControls(this.camera, this.renderer.domElement);
 			this.controls.update();
@@ -75,7 +77,7 @@
 			this.camera.lookAt(0, 0, 0);
 
 			this.stats = new Stats();
-			document.body.appendChild(this.stats.dom);
+			threeContainer.appendChild(this.stats.dom);
 		}
 
 		async init() {
@@ -163,6 +165,8 @@
 		});
 	});
 </script>
+
+<div bind:this={threeContainer} />
 
 <svelte:head>
 	<title>My first three.js app</title>
