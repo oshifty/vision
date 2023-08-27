@@ -17,6 +17,10 @@ export function createWebsocketServer(httpServer: http.Server) {
 			}
 		});
 
+		socket.on('position', (position) => {
+			io.emit('position', position);
+		});
+
 		socket.on('rtt', (start) => {
 			const tof = Date.now() - start;
 			socket.emit('tof', tof);
