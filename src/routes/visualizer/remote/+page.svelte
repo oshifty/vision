@@ -1,14 +1,14 @@
 <script lang="ts">
 	import PositionController from './PositionController.svelte';
 	import { onMount } from 'svelte';
-
-	import { io } from 'socket.io-client';
-	const socket = io();
+	import { io, type Socket } from 'socket.io-client';
 
 	let status = 'Disconnected';
 	let transport = 'N/A';
-
+	let socket: Socket;
 	onMount(() => {
+		socket = io();
+
 		let vh = window.innerHeight * 0.01;
 		document.documentElement.style.setProperty('--vh', `${vh}px`);
 

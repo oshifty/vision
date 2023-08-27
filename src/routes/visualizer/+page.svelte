@@ -15,8 +15,6 @@
 
 	export let data;
 
-	const socket = io();
-
 	class World {
 		renderer: THREE.WebGLRenderer;
 		camera: THREE.PerspectiveCamera;
@@ -111,6 +109,8 @@
 	}
 
 	onMount(async () => {
+		const socket = io();
+
 		let gltf = await zip.loadAsync(data.streamed.base64, { base64: true });
 
 		const world = new World();
