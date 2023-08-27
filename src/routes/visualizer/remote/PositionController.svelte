@@ -11,7 +11,7 @@
 	let x = 0.5;
 	let y = 0.5;
 
-	function firstUpdated() {
+	function registerEvents() {
 		handle.addEventListener('mousedown', (event) => startDrag(event));
 		handle.addEventListener('touchstart', (event) => startDrag(event));
 	}
@@ -43,13 +43,19 @@
 	}
 
 	onMount(() => {
-		firstUpdated();
-
-		socket.on('position', (position) => {
-			x = position.x;
-			y = position.y;
-		});
+		registerEvents();
 	});
+
+	let socketInitialized = false;
+	$: {
+		if (!socketInitialized && socket) {
+			socketInitialized = true;
+			socket.on('position', (position) => {
+				x = position.x;
+				y = position.y;
+			});
+		}
+	}
 </script>
 
 <div>
