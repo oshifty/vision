@@ -23,3 +23,47 @@ export function getFirstFileAsArrayBuffer(zip: JSZip, startsWith: string, endsWi
 	})?.[0];
 	return file ? zip.file(file)?.async('arraybuffer') : undefined;
 }
+
+export function toogleOrientatonLock(orientation: OrientationLockType = 'any') {
+	if (document.fullscreenElement) {
+		unlockScreenOrientation();
+	} else {
+		lockScreenOrientation(orientation);
+	}
+}
+
+export function lockScreenOrientation(orientation: OrientationLockType) {
+	const de = document.documentElement;
+	if (de.requestFullscreen) {
+		de.requestFullscreen();
+	} else if (de.mozRequestFullScreen) {
+		de.mozRequestFullScreen;
+	} else if (de.webkitRequestFullscreen) {
+		de.webkitRequestFullscreen();
+	} else if (de.msRequestFullscreen) {
+		de.msRequestFullscreen();
+	}
+
+	screen.orientation.lock(orientation).then(
+		() => {
+			let _success;
+		},
+		() => {
+			let _failure;
+		}
+	);
+}
+
+export function unlockScreenOrientation() {
+	screen.orientation.unlock();
+
+	if (document.exitFullscreen) {
+		document.exitFullscreen();
+	} else if (document.webkitExitFullscreen) {
+		document.webkitExitFullscreen();
+	} else if (document.mozCancelFullScreen) {
+		document.mozCancelFullScreen();
+	} else if (document.msExitFullscreen) {
+		document.msExitFullscreen();
+	}
+}
