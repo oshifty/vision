@@ -1,3 +1,4 @@
+import { gdtfShareIDs } from '$lib/gdtfHelpers';
 import type { PageServerLoad } from './$types';
 import makeFetchCookie from 'fetch-cookie';
 
@@ -37,12 +38,12 @@ async function fetchGLTFAsBase64(id: number) {
 }
 
 export const load = (async () => {
-	const RobeMegaPointe = fetchGLTFAsBase64(41425);
+	const gdtfFile = fetchGLTFAsBase64(gdtfShareIDs.RobeRobinMegaPointe);
 
 	return {
 		streamed: {
-			base64: (await RobeMegaPointe).base64,
-			contentType: (await RobeMegaPointe).contentType
+			base64: (await gdtfFile).base64,
+			contentType: (await gdtfFile).contentType
 		}
 	};
 }) satisfies PageServerLoad;

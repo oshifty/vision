@@ -50,3 +50,17 @@ export function parseMatrix4(matrix: string): Matrix4 {
  * @see https://discourse.threejs.org/t/convert-from-one-coordinate-system-to-another/13240/10
  */
 export const cobMatrix = new Matrix4().set(1, 0, 0, 0, 0, 0, 1, 0, 0, -1, 0, 0, 0, 0, 0, 1);
+
+/**
+ * Some IDs for testing with fixtures that are available on the GDTF Share.
+ *
+ * @see https://gdtf-share.com/
+ */
+export enum gdtfShareIDs {
+	RobeRobinMegaPointe = 41425,
+	RobeRobinEspriteFresnel = 44218,
+	RobeRobinT2Fresnel = 41457,
+	RobeRobinLEDBeam150RGBW = 42565,
+	RobeRobinTetraX = 42544, // works out of luck ( Pixels are not 100% centered as tree is not traversed yet)
+	RobeRobinTetra2 = 42535 // throws error because geometry tree is still hardcoded
+}
