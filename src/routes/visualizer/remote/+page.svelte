@@ -205,7 +205,7 @@
 
 	div.main-container {
 		height: 100%;
-		overflow: scroll;
+		overflow: hidden;
 		-webkit-overflow-scrolling: touch;
 	}
 	div.sub-container {
