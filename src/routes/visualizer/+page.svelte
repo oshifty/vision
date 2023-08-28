@@ -21,7 +21,8 @@
 		let gltf = await zip.loadAsync(data.streamed.base64, { base64: true });
 
 		const world = new World(threeContainer);
-		const descriptionXML = await gltf.file('description.xml')!.async('string');
+		const descriptionXML = await gltf.file('description.xml')?.async('string');
+		if (!descriptionXML) throw new Error('No description.xml found in GDTF file');
 		const description = new XMLParser({
 			ignoreAttributes: false,
 			attributeNamePrefix: '',
@@ -33,13 +34,16 @@
 		let head = await getFirstFileAsArrayBuffer(gltf, 'head', '.glb');
 		let lens = await getFirstFileAsArrayBuffer(gltf, 'lens', '.glb');
 
-		const Geometry = description.GDTF.FixtureType.Geometries.Geometry![0];
+		const Geometry = description.GDTF.FixtureType.Geometries.Geometry?.[0];
+		if (!Geometry) throw new Error('No Geometry found in description.xml');
 
 		if (base)
 			world.loader.parse(base, '', (gltf) => {
 				world.base = gltf;
+				const { Position } = Geometry;
+				if (!Position) throw new Error('No Position found in description.xml');
 				world.base.scene.position.setFromMatrixPosition(
-					gdtfHelpers.parseMatrix4(Geometry.Position!).premultiply(gdtfHelpers.cobMatrix)
+					gdtfHelpers.parseMatrix4(Position).premultiply(gdtfHelpers.cobMatrix)
 				);
 				world.base.scene.position.y += 0.3;
 				world.scene.add(world.base.scene);
@@ -48,8 +52,10 @@
 		if (yoke)
 			world.loader.parse(yoke, '', (gltf) => {
 				world.yoke = gltf;
+				if (!Geometry.Axis?.[0].Position)
+					throw new Error('No Axis Position found in description.xml');
 				world.yoke.scene.position.setFromMatrixPosition(
-					gdtfHelpers.parseMatrix4(Geometry.Axis![0].Position!).premultiply(gdtfHelpers.cobMatrix)
+					gdtfHelpers.parseMatrix4(Geometry.Axis[0].Position).premultiply(gdtfHelpers.cobMatrix)
 				);
 				world.base?.scene.add(world.yoke.scene);
 			});
@@ -57,21 +63,24 @@
 		if (head)
 			world.loader.parse(head, '', (gltf) => {
 				world.head = gltf;
+				if (!Geometry.Axis?.[0].Axis?.[0].Position)
+					throw new Error('No Axis Axis Position found in description.xml');
 				world.head.scene.position.setFromMatrixPosition(
 					gdtfHelpers
-						.parseMatrix4(Geometry.Axis![0].Axis![0].Position!)
+						.parseMatrix4(Geometry.Axis[0].Axis[0].Position)
 						.premultiply(gdtfHelpers.cobMatrix)
 				);
 				world.yoke?.scene.add(world.head.scene);
 			});
 
 		if (lens) {
-			const pixels = Geometry.Axis![0].Axis![0].Geometry![0].Geometry![0].GeometryReference!;
-			console.log(pixels);
+			const pixels = Geometry.Axis?.[0].Axis?.[0].Geometry?.[0].Geometry?.[0].GeometryReference;
+			if (!pixels) throw new Error('No GeometryReference found in description.xml');
 			for (const pixel of pixels) {
 				world.loader.parse(lens, '', (gltf) => {
+					if (!pixel.Position) throw new Error('No Position for Pixel found in description.xml');
 					gltf.scene.position.setFromMatrixPosition(
-						gdtfHelpers.parseMatrix4(pixel.Position!).premultiply(gdtfHelpers.cobMatrix)
+						gdtfHelpers.parseMatrix4(pixel.Position).premultiply(gdtfHelpers.cobMatrix)
 					);
 					world.head?.scene.add(gltf.scene);
 				});
