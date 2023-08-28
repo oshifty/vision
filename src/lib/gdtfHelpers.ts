@@ -27,13 +27,13 @@ export function parseMatrix4(matrix: string): Matrix4 {
  * ```
  *    three.js (X, Y, Z)                  GDTF (X, Z, -Y)
  *       Y                                 Z
- *       |                                 |
- *       |                                 |
- *       |                                 |
+ *       |                                 |   Y
+ *       |                                 |  /
+ *       |                                 | /
  *       +---------> X                     +---------> X
- *      /                                   \
- *     /                                     \
- *    Z                                       Y
+ *      /
+ *     /
+ *    Z
  * ```
  *
  * This is why we need to apply this Matrix4 to the GDTF Matrix4 upon import.
