@@ -4,7 +4,7 @@ import { Server } from 'socket.io';
 export function createWebsocketServer(httpServer: http.Server) {
 	const io = new Server(httpServer);
 	const state = {
-		position: undefined,
+		position: undefined
 	};
 
 	io.on('connection', (socket) => {
