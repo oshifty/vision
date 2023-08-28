@@ -41,7 +41,7 @@
 			world.loader.parse(base, '', (gltf) => {
 				world.base = gltf;
 				const { Position } = Geometry;
-				if (!Position) throw new Error('No Position found in description.xml');
+				if (!Position) throw new Error('No Base Position found in description.xml');
 				world.base.scene.position.setFromMatrixPosition(
 					gdtfHelpers.parseMatrix4(Position).premultiply(gdtfHelpers.cobMatrix)
 				);
@@ -53,7 +53,7 @@
 			world.loader.parse(yoke, '', (gltf) => {
 				world.yoke = gltf;
 				if (!Geometry.Axis?.[0].Position)
-					throw new Error('No Axis Position found in description.xml');
+					throw new Error('No Yoke Position found in description.xml');
 				world.yoke.scene.position.setFromMatrixPosition(
 					gdtfHelpers.parseMatrix4(Geometry.Axis[0].Position).premultiply(gdtfHelpers.cobMatrix)
 				);
@@ -64,7 +64,7 @@
 			world.loader.parse(head, '', (gltf) => {
 				world.head = gltf;
 				if (!Geometry.Axis?.[0].Axis?.[0].Position)
-					throw new Error('No Axis Axis Position found in description.xml');
+					throw new Error('No Head Position found in description.xml');
 				world.head.scene.position.setFromMatrixPosition(
 					gdtfHelpers
 						.parseMatrix4(Geometry.Axis[0].Axis[0].Position)
@@ -75,10 +75,10 @@
 
 		if (lens) {
 			const pixels = Geometry.Axis?.[0].Axis?.[0].Geometry?.[0].Geometry?.[0].GeometryReference;
-			if (!pixels) throw new Error('No GeometryReference found in description.xml');
+			if (!pixels) throw new Error('No GeometryReference for Pixels found in description.xml');
 			for (const pixel of pixels) {
 				world.loader.parse(lens, '', (gltf) => {
-					if (!pixel.Position) throw new Error('No Position for Pixel found in description.xml');
+					if (!pixel.Position) throw new Error('No Pixel Position found in description.xml');
 					gltf.scene.position.setFromMatrixPosition(
 						gdtfHelpers.parseMatrix4(pixel.Position).premultiply(gdtfHelpers.cobMatrix)
 					);
