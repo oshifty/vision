@@ -4,7 +4,7 @@ on: [push, pull_request]
 
 jobs:
   test:
-    name: Test
+    name: Lint and Test
     runs-on: ubuntu-latest
     timeout-minutes: 15
 
@@ -21,6 +21,9 @@ jobs:
         run: |
           npm install
           npx playwright install
+      - name: Lint
+        run: |
+          npm run lint
       - name: Run tests
         run: |
           npm run test
