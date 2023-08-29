@@ -2,9 +2,14 @@ import { Worker } from 'worker_threads';
 import * as Comlink from 'comlink';
 import nodeEndpoint from 'comlink/dist/esm/node-adapter';
 import type { api } from './worker';
+import { building } from '$app/environment';
 
-const worker = new Worker('./build/worker.js');
-const workerApi = Comlink.wrap<typeof api>(nodeEndpoint(worker));
+let worker: Worker;
+let workerApi: typeof api = {} as any;
+if (!building) {
+	worker = new Worker('./build/worker.js');
+	workerApi = Comlink.wrap<typeof api>(nodeEndpoint(worker)) as unknown as typeof api;
+}
 
 export const { validateAgainstUDRSymbol, getUDRSchemaForSymbol, validateDocumentAgainstSchema } =
-	workerApi as unknown as typeof api;
+	workerApi;
