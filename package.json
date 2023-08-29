@@ -10,7 +10,7 @@
 	"scripts": {
 		"postinstall": "tsx tools/fetchUDR.ts",
 		"doc:build": "typedoc",
-		"doc": "typedoc --watch --preserveWatchOutput & browser-sync start -c browsersync.json",
+		"doc": "concurrently \"typedoc --watch --preserveWatchOutput\" \"browser-sync start -c browsersync.json\"",
 		"dev": "npm run build-worker && vite dev",
 		"dev:watch:worker": "concurrently \"vite dev\" \"npm run build-worker --watch\"",
 		"dev:host": "vite dev --host",
