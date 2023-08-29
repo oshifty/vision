@@ -22,14 +22,13 @@ jobs:
           npm install
           npx playwright install
       - name: Lint
-        run: |
-          npm run lint
+        run: npm run lint
+      - name: Build
+        run: npm run build
       - name: Run tests
-        run: |
-          npm run test
+        run: npm run test
       - name: Check docs generation
-        run: |
-          npm rum doc:build
+        run: npm rum doc:build
   release:
     name: Release
     runs-on: ubuntu-latest
