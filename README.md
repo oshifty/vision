@@ -8,6 +8,7 @@ Feel free to check out the concepts here on GitHub, lets discuss your own ideas 
 
 - [Type Documentation](https://oshifty.github.io/vision) &rarr; checkout running [locally](http://localhost:8000) (`npm run doc`)
 - [WebSocket Demo](/src/routes/webSocketDemo) &rarr; checkout w/ running dev server: [/websocketDemo](http://localhost:5173/webSocketDemo)
+- [Fixture Validation](/src/routes/fixtureValidation) &rarr; chechkout w/ running dev server: [/fixtureValidation](http://localhost:5173/fixtureValidation)
 - [Visualizer](/src/routes/visualizer) &rarr; checkout w/ running dev server: [/visualizer](http://localhost:5173/visualizer)
   - [Remote](/src/routes/visualizer/remote) &rarr; checkout w/ running dev server: [/visualizer/remote](http://localhost:5173/visualizer/remote)
 
