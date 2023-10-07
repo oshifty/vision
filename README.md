@@ -1,3 +1,7 @@
+---
+title: Vision
+---
+
 # SHIFTY - Vision
 
 A new and intuitive way of controlling intelligent devices developed from first principles for the event industry.
