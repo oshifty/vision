@@ -57,10 +57,10 @@ export const cobMatrix = new Matrix4().set(1, 0, 0, 0, 0, 0, 1, 0, 0, -1, 0, 0, 
  * @see https://gdtf-share.com/
  */
 export enum gdtfShareIDs {
-	RobeRobinMegaPointe = 41425,
-	RobeRobinEspriteFresnel = 44218,
+	RobeRobinMegaPointe = 62382,
+	RobeRobinEspriteFresnel = 63633,
 	RobeRobinT2Fresnel = 41457,
 	RobeRobinLEDBeam150RGBW = 42565,
-	RobeRobinTetraX = 42544, // works out of luck ( Pixels are not 100% centered as tree is not traversed yet)
-	RobeRobinTetra2 = 42535 // throws error because geometry tree is still hardcoded
+	RobeRobinTetraX = 72833, // works out of luck ( Pixels are not 100% centered as tree is not traversed yet)
+	RobeRobinTetra2 = 72832 // throws error because geometry tree is still hardcoded
 }
