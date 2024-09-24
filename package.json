@@ -26,7 +26,7 @@
 		"test:unit": "vitest"
 	},
 	"devDependencies": {
-		"@mxssfd/typedoc-theme": "^1.1.2",
+		"@mxssfd/typedoc-theme": "^1.1.3",
 		"@playwright/test": "^1.28.1",
 		"@sveltejs/adapter-auto": "^2.0.0",
 		"@sveltejs/adapter-node": "^1.3.1",
@@ -41,6 +41,7 @@
 		"eslint": "^8.28.0",
 		"eslint-config-prettier": "^8.5.0",
 		"eslint-plugin-svelte": "^2.30.0",
+		"mdsvex": "^0.11.0",
 		"nodemon": "^3.0.1",
 		"polka": "^0.5.2",
 		"prettier": "^2.8.0",
@@ -49,7 +50,7 @@
 		"svelte-check": "^3.4.3",
 		"tslib": "^2.4.1",
 		"tsx": "^3.12.7",
-		"typedoc": "^0.24.8",
+		"typedoc": "^0.25.1",
 		"typescript": "^5.0.0",
 		"vite": "^4.4.2",
 		"vitest": "^0.32.2"
@@ -63,6 +64,7 @@
 		"fast-xml-parser": "^4.2.7",
 		"fetch-cookie": "^2.1.0",
 		"gdtf-types": "^1.0.0",
+		"github-markdown-css": "^5.2.0",
 		"json-schema-to-typescript": "^13.0.2",
 		"jszip": "^3.10.1",
 		"three": "^0.155.0",

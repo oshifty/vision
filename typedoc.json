@@ -5,6 +5,7 @@
 	"tsconfig": "tsconfig.docs.json",
 	// "excludePrivate": true,
 	"plugin": ["@mxssfd/typedoc-theme"],
+	"stripYamlFrontmatter": true,
 	"theme": "my-theme",
 	"name": "Home",
 	"visibilityFilters": {

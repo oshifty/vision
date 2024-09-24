@@ -15,6 +15,9 @@ export default defineConfig({
 	server: {
 		watch: {
 			ignored: ['**/public/**']
+		},
+		fs: {
+			allow: ['./README.md']
 		}
 	},
 	plugins: [sveltekit(), webSocketServer],
